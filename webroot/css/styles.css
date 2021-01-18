@@ -1,0 +1,118 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 29 Nov 2020, 11:09:45 am
+    Author     : songalia
+*/
+
+@tailwind base;
+@tailwind components;
+
+
+.scroll-action{
+    @apply bg-green-700 rounded-full text-white p-5 text-3xl z-10 
+            opacity-10 cursor-pointer;
+}
+
+.content{
+    @apply dark:bg-gray-900 dark:text-gray-400;
+}
+
+.btn-success{
+    @apply bg-green-500 text-white font-bold py-2 px-4 
+    rounded-full hover:bg-green-600 hover:text-white;
+}
+
+.btn-warning {
+    @apply bg-yellow-300 text-white font-bold py-2 px-4 
+    rounded-full  hover:bg-yellow-400 hover:text-white;
+}
+
+.btn-danger {
+    @apply bg-red-400  text-white font-bold py-2 px-4 
+    rounded-full hover:bg-red-500 hover:text-white;
+}
+
+
+.side-nav-link {
+    @apply hover:bg-gray-200 ml-12 py-2 cursor-pointer dark:hover:bg-gray-600 
+        dark:text-gray-300 dark:hover:text-white;
+}
+
+.side-nav-link-icon {
+    @apply mx-2 text-blue-700;
+}
+
+.side-nav-link-drop {
+    @apply ml-4 text-gray-400;
+}
+
+.text-animation-container {
+    @apply flex flex-col animate-pulse h-full w-full pl-10  justify-center 
+    lg:py-7 md:py-3;
+}
+
+.text-animation {
+    @apply bg-blue-300 h-2 rounded w-5/6 my-2;
+}
+
+.dashboard-container {
+    @apply p-3 flex border border-blue-100 rounded-md shadow-sm bg-green-800 md:bg-transparent 
+    border-opacity-50 hover:shadow-md hover:border-opacity-100  h-48 dark:border-none
+    text-white md:text-gray-500;
+}
+
+.dashboard-icon-container {
+    @apply bg-transparent h-full rounded-lg  mr-5 p-5 w-4/6 md:shadow-md  md:bg-green-500
+         hidden sm:block;
+}
+
+.dashboard-icon {
+    @apply w-full h-full text-white;
+}
+
+.dashboard-text-container {
+    @apply flex flex-col text-center  w-full justify-between;
+}
+
+.dashboard-title {
+    @apply text-white text-7xl my-auto dark:text-white md:text-gray-700;
+}
+
+.drop-container {
+    @apply text-2xl;
+}
+
+h3{
+    @apply text-4xl;
+}
+
+tbody tr{
+    @apply hover:bg-blue-100 dark:hover:bg-gray-800;
+}
+
+aside{
+    @apply  dark:bg-gray-900 dark:text-gray-400;
+}
+
+input{
+    @apply dark:bg-gray-400 dark:text-black dark:border-none;
+}
+
+select{
+    @apply dark:bg-gray-400 dark:text-black dark:border-none;
+}
+
+@tailwind utilities;
+
+@layer utilities {
+  @variants dark {
+    .border-none {
+      border: none;
+    }
+
+  }
+}
