@@ -13,7 +13,9 @@
     </aside>
     <div class="column-responsive column-80">
         <div class="documentTypes form content">
-            <?= $this->Form->create($documentType) ?>
+            <?= $this->Form->create($documentType,[
+                 'id' => 'mainAddForm',
+            ]) ?>
             <fieldset>
                 <legend><?= __('Add Document Type') ?></legend>
                 <?php

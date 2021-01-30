@@ -389,6 +389,79 @@ tbody tr {
 
 
 /*added*/
+
+.remove-upload-file{
+    z-index: 9;
+    position: relative;
+    top: 50%;
+    text-align: center;
+    margin-bottom: -30px;
+    color: #ff3333;
+    opacity: 0;
+    font-size: 2.5rem;
+    transition: 350ms ease;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+    padding: 0.5rem 0.8rem;
+    border-radius: 50%;
+}
+
+.remove-upload-file:hover{
+    background-color: #ffffff;
+    
+}
+
+.preview-img-add{
+    transition: 350ms ease;
+}
+
+.preview-img-add:hover{
+    opacity: 0.3;
+}
+
+
+.uploadedFileContainer small{
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.uploadedFileContainer div{
+    max-height: 15rem;
+    overflow: hidden;
+}
+
+.uploadedFileContainer img{
+    height: 100%;
+}
+
+.uploadedFileContainer img:hover{
+    --tw-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.zipDownloadContainer{
+    max-width: 100%;
+    overflow: hidden;
+    background-color: rgba(0, 102, 153,0.8);
+    padding: 0.8rem 1.2rem;
+    border-radius: 0.3rem;
+}
+.zipDownload{
+    text-decoration: none;
+    color: #cccccc;
+}
+
+.zipDownloadContainer:hover{
+    background-color: rgba(0, 102, 153,1);
+    color: #ffffff;
+    --tw-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
 /*index table scrollbar*/
 .fileNameContainer::-webkit-scrollbar {
   width: 5px;

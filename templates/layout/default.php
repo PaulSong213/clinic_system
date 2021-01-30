@@ -37,7 +37,7 @@ if(isset($_COOKIE['userTheme'])) {
     ); ?>
 
     
-    <?= $this->Html->script(['chart.js/dist/chart','sweetalert2/dist/sweetalert2.all.js']) ?>
+    <?= $this->Html->script(['chart.js/dist/chart','sweetalert2/dist/sweetalert2.all.js','dropzone/dist/dropzone']) ?>
     <?= $this->Html->css(['normalize.min', 'milligram.min', 'cake','tailwindcss/dist/tailwind',
         '../js/sweetalert2/dist/sweetalert2.css','../js/DataTables/datatables.css']) ?>
     
@@ -176,6 +176,26 @@ if(isset($_COOKIE['userTheme'])) {
                     </div>
                 </div>
                 
+                <div class="files flex flex-col">
+<!--                    dropdown Title-->
+                    <a onclick="dropContent('#fileDropDown','#drop-file-icon' )" 
+                       class="side-nav-link ml-0 noselect">
+                        <ion-icon name="chevron-forward-outline" 
+                        class="side-nav-link-drop" id="drop-file-icon"></ion-icon>
+                        Files</a>
+<!--                    dropdown Item-->
+                    <div id="fileDropDown" class="hidden drop-container">
+                        <a class="side-nav-link noselect"
+                            onclick="setMainContent('/document-files')">
+                             <ion-icon name="document-outline" class="side-nav-link-icon" >
+                             </ion-icon>List files</a>
+                         <a class="side-nav-link noselect"
+                            onclick="setMainContent('/document-files/add')">
+                             <ion-icon name="pencil-outline" class="side-nav-link-icon">
+                             </ion-icon>Add Files</a>
+                    </div>
+                </div>
+            
                 <div class="patients flex flex-col">
 <!--                    dropdown Title-->
                     <a onclick="dropContent('#patientsDropDown','#patients-icon' )" 
@@ -320,8 +340,8 @@ if(isset($_COOKIE['userTheme'])) {
             });
         }
         
-        function addForm(addLink, homeLink) {
-            $('form').on('submit', function (e) {
+        function addForm(addLink, homeLink, addingForm = '#mainAddForm') {
+            $(addingForm).on('submit', function (e) {
               var formData = new FormData(this);  
               Swal.fire({
                 title: 'Please Wait',

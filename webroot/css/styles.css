@@ -11,9 +11,20 @@ and open the template in the editor.
 @tailwind base;
 @tailwind components;
 
+.preview-container{
+    @apply rounded-md shadow-md hover:shadow-xl;
+}
+
+.uploadedFileContainer{
+    @apply  grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4;
+}
+
+.preview-img-add{
+    @apply rounded-lg shadow-lg;
+}
 
 .scroll-action{
-    @apply bg-green-700 rounded-full text-white p-5 text-3xl z-10 
+    @apply bg-blue-400 rounded-full text-white p-5 text-3xl z-10 
             opacity-10 cursor-pointer;
 }
 

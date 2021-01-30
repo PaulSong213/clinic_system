@@ -15,7 +15,8 @@
         <div class="documentFiles form content">
             <?= $this->Form->create($documentFile,[
                 'type' => 'file',
-                'enctype' => 'multipart/form-data'
+                'enctype' => 'multipart/form-data',
+                'id' => 'mainAddForm'
             ]) ?>
             <fieldset>
                 <legend><?= __('Add Document File') ?></legend>

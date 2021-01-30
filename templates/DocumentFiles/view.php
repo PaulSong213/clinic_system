@@ -8,10 +8,11 @@
     <aside class="column">
         <div class="side-nav">
             <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Html->link(__('Edit Document File'), ['action' => 'edit', $documentFile->id], ['class' => 'side-nav-item']) ?>
-            <?= $this->Form->postLink(__('Delete Document File'), ['action' => 'delete', $documentFile->id], ['confirm' => __('Are you sure you want to delete # {0}?', $documentFile->id), 'class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('List Document Files'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('New Document File'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
+            <p class="list" >List Files</p>
+            <p class="add" >Add File</p>
+            <p class="edit" id="e<?=$documentFile->id?>" >Edit File</p>
+            <p class="delete" id="d<?=$documentFile->id?>" >Delete File</p>
+            <?= $this->Form->postLink('')?>
         </div>
     </aside>
     <div class="column-responsive column-80">
@@ -42,3 +43,14 @@
         </div>
     </div>
 </div>
+<script> 
+
+    $(document).ready(function(){
+        dataActions('.list','/document-files',false);
+        dataActions('.add','/document-files/add',false);
+        dataActions('.edit','/document-files/edit/');
+        dataDeleteAction('/document-files/delete/', '/document-files',false);
+        
+    });
+</script>
+    

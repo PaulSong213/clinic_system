@@ -13,7 +13,9 @@
     </aside>
     <div class="column-responsive column-80">
         <div class="hasRoles form content">
-            <?= $this->Form->create($hasRole) ?>
+            <?= $this->Form->create($hasRole,[
+                 'id' => 'mainAddForm',
+            ]) ?>
             <fieldset>
                 <legend><?= __('Add Has Role') ?></legend>
                 <?php

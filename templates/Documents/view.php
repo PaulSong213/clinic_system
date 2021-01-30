@@ -87,12 +87,11 @@
                                 <h1><small><?= date_format($file->created_at,"M d, Y  D");?></small></h1>
                             </div>
                             <div class="action flex justify-center">
-                                <a href="<?= DS.$file->pathName?>" class="m-2"
+                                <a href="<?= '/clinic-document/'.$file->pathName?>" class="m-2"
                                    download="<?= $file->name?>">Download</a>
-                                <a href="<?= DS.$file->pathName?>" class="m-2"
+                                <a href="<?= '/clinic-document/'.$file->pathName?>" class="m-2"
                                    target="_blank">View</a>
                             </div>
-                        
                         
                         </div>
                     </div>

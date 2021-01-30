@@ -13,7 +13,9 @@
     </aside>
     <div class="column-responsive column-80">
         <div class="statusHistories form content">
-            <?= $this->Form->create($statusHistory) ?>
+            <?= $this->Form->create($statusHistory,[
+                 'id' => 'mainAddForm',
+            ]) ?>
             <fieldset>
                 <legend><?= __('Add Status History') ?></legend>
                 <?php

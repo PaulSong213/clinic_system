@@ -58,14 +58,27 @@ class DocumentsController extends AppController
         if ($this->request->is('post')) {
            
             $document = $this->Documents->patchEntity($document, $this->request->getData());
-            
+            $fileDocumentId = $this->request->getData('document_files');
+            $fileDocumentToDelete = $this->request->getData('document_files_deletion');
+            $fileIds = array_filter(explode(",", $fileDocumentId));
+            $fileDelete = array_filter(explode(",", $fileDocumentToDelete));
             if ($this->Documents->save($document)) {
-                $articlesTable = TableRegistry::getTableLocator()->get('Documents');
                 $currentId = $document->id;
-                $editDocument = $this->Documents->get($currentId);
-                $editDocument->document_internal_path_name = 'Clinic_Document_'.$currentId;
-                if($articlesTable->save($editDocument)){
-                    return $this->redirect(['action' => 'index']);
+                $docFiles = TableRegistry::getTableLocator()->get('DocumentFiles');
+                for($i = 0; $i < sizeof($fileIds); $i++){
+                    $editDocFiles = $docFiles->get($fileIds[$i], [
+                        'contain' => [],
+                    ]);
+                    $editDocFiles->document_id = $currentId;
+                    $editDocFiles = $docFiles->patchEntity($editDocFiles,(array)$editDocFiles);
+                    $docFiles->save($editDocFiles);
+                }
+                for($i = 0; $i < sizeof($fileDelete); $i++){
+                    $file = $docFiles->get($fileDelete[$i]);
+                    $deletePath = WWW_ROOT.'clinic-document'.DS.$file->pathName;
+                    if($docFiles->delete($file)){
+                        unlink($deletePath);
+                    }
                 }
             }
         }
@@ -170,8 +183,7 @@ class DocumentsController extends AppController
                $filePaths[$i] = $fileExtract[0];
                $fileNames[$i] = $fileExtract[1];
             }
-            print_r($filePaths);
-            $this->makeZip($fileZipName,$filePaths,$fileNames);   
+            echo $zipInfo = json_encode($this->makeZip($fileZipName,$filePaths,$fileNames));
             
         }else {
             return $this->redirect(['action' => 'index']);
@@ -181,7 +193,9 @@ class DocumentsController extends AppController
     
     function makeZip($fileZipName = null,$filePaths = [], $fileNames = []){
         $zip = new ZipArchive();
-        $DelFilePath= WWW_ROOT.'clinic-document'.DS.$fileZipName.'.zip';
+        $zipName = $fileZipName.'.zip';
+        $zipRootName = 'clinic-document'.DS.$zipName;
+        $DelFilePath= WWW_ROOT.$zipRootName;
         if(file_exists($DelFilePath)) {
                 unlink ($DelFilePath); 
         }
@@ -198,7 +212,7 @@ class DocumentsController extends AppController
         }
         //close and save archive
         $zip->close(); 
-        return print_r($DelFilePath);
+        return [$zipRootName,$zipName];
     }
     
     function cleanValidFileName($string) {

@@ -35,6 +35,7 @@
     </div>
     
 </div>
+
 <div class="hidden shadow-xl rounded-xl"  id="fileToZipContainer">
     <small><bold id="zipFileCount">0</bold> File/s Selected</small>
     <h2>Choose Files to be Included to Zip</h2>
@@ -43,7 +44,7 @@
         <div class="zipAction">
             <input type="button" value="Cancel" id="cancelZip">
 <!--         IMPORTANT!! ZIP NAME should be current user id so zip names will not override-->
-            
+            <input type='hidden' name='zipName' id="zipName">
             <input type="submit" value="Generate Zip File" id="confirmZip">
         </div>
     </form>
@@ -51,11 +52,10 @@
 <script>
     function downloadZip(downloadButton){
         
-        
-        
         var zipFileCancelButton = $('#cancelZip');
         
         $(downloadButton).click(function(){
+            
             var zipOptionContainer = $('#fileToZipContainer');
             var zipConfirmButton = $("#confirmZip");
             var zipOptions = $('#fileToZipContainer .toZipDiv');
@@ -64,7 +64,7 @@
             if(zipOptionContainer.is(":visible")){
                 zipOptionContainer.hide('fast',function(){
                     zipOptions.remove();
-                    zipOptions.attr('disabled',false);
+                    zipConfirmButton.attr('disabled',false);
                 });
             }
            var fullInfo = $(this).attr('id').split(">");
@@ -72,7 +72,7 @@
            var filePathNames = fullInfo[1].split("%");
            var fileZipName = fullInfo[2].split("%");
            var zipForm = $('#fileToZipForm');
-           //console.log(filePathNames);
+           console.log(fileNames);
            for(var i = 0; i < filePathNames.length; i++){
                var fileNameFilePath = filePathNames[i] + "%" + fileNames[i];
                var containerZips = $('<div class="toZipDiv shadow-md hover:shadow-xl"></div>');
@@ -86,8 +86,7 @@
                zipForm.prepend(containerZips);
            }
            
-           var zipName = $("<input type='hidden' value='"+fileZipName+"' name='zipName'>");
-           zipForm.prepend(zipName);
+           var zipName = $("#zipName").attr('value', fileZipName);
            var maxCount = filePathNames.length;
            var fileCount = filePathNames.length;
            zipFileCounter.html('All');
@@ -147,8 +146,27 @@
                     request.setRequestHeader('X-CSRF-Token', $('[name="_csrfToken"]').val());
                 },
                 success: function (data) {
-                    swal.close(); 
-                    console.log(data);
+                    swal.close();
+                    
+                    var zipInformation = JSON.parse(data);
+                    var zipRoute = zipInformation[0];
+                    var zipDisplayName = "DOWNLOAD ["+zipInformation[1]+"]";
+                    var zipDownloadName = zipInformation[1];
+                    $('#fileToZipContainer').hide('fast',function(){
+                        $('#fileToZipContainer .toZipDiv').remove();
+                        $("#confirmZip").attr('disabled',false);
+                    });
+                    
+                    Swal.fire({
+                     title: 'Zip Created',
+                     html: "<div class='zipDownloadContainer'><a href='"+zipRoute+"' class='zipDownload' style='color:#d7dade' download='"+zipDownloadName+"'>"+zipDisplayName+"</a></div>",
+                     icon: 'info',
+                     width: 'fit-content',
+                     padding: '1vw',
+                     showConfirmButton: false,
+                     showCancelButton: true,
+                     cancelButtonText: 'Close Dialog'
+                    })
                 },
                 error: function(){
                     Swal.fire({
@@ -267,6 +285,7 @@
                 
                 $('th').removeClass('file-foreign');
                 $('.file-foreign').each(function(index,element){
+                    console.log($(this).html());
                     var target = index + 1;
                     var foreignFileIds = $(tableSelector + " tbody tr:nth-child("+ target +") td:nth-child(13) ").html();
                     var pathName = $(tableSelector + " tbody tr:nth-child("+ target +") td:nth-child(3) ").html();
@@ -280,8 +299,7 @@
                     var documentInfo = docName + docPatient;
                     var infoToZip = name + ">"+ pathName + ">" + documentInfo;
                     $(this).html("");
-                    //console.log(filePathName);
-                    for(var i = 0; i < fileID.length; i++){
+                    for(var i = 0; i < fileName.length; i++){
                         var foreignLocation = "/document-files/view/" + fileID[i];
                         var foreignName = fileName[i];
                         var foreignElement = $("<p class='foreign' id='"+foreignLocation+"'>"+foreignName+"</p>");

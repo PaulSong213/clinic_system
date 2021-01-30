@@ -75,7 +75,7 @@ class DocumentFilesTable extends Table
 
         $validator
             ->dateTime('created_at')
-            ->notEmptyDateTime('created_at');
+            ->allowEmptyDateTime('created_at');
 
         return $validator;
     }
@@ -89,7 +89,10 @@ class DocumentFilesTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->existsIn(['document_id'], 'Documents'), ['errorField' => 'document_id']);
+        $rules->add($rules->existsIn(['document_id'], 'Documents'),
+                ['errorField' => 'document_id'],
+                ['allowNullableNulls' => true]
+                );
 
         return $rules;
     }

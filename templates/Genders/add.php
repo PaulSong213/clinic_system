@@ -13,7 +13,9 @@
     </aside>
     <div class="column-responsive column-80">
         <div class="genders form content">
-            <?= $this->Form->create($gender) ?>
+            <?= $this->Form->create($gender,[
+                 'id' => 'mainAddForm',
+            ]) ?>
             <fieldset>
                 <legend><?= __('Add Gender') ?></legend>
                 <?php

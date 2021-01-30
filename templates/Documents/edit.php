@@ -21,7 +21,9 @@
             <fieldset>
                 <legend><?= __('Edit Document') ?></legend>
                 <?php
-                    echo $this->Form->control('document_internal_path_name');
+                    echo $this->Form->control('document_internal_path_name',[
+                        'type' => 'hidden'
+                    ]);
                     echo $this->Form->control('document_name');
                     echo $this->Form->control('document_type_id', ['options' => $documentTypes]);
                     echo $this->Form->control('document_url');

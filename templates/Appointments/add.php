@@ -14,7 +14,9 @@
     </aside>
     <div class="column-responsive column-80">
         <div class="appointments form content">
-            <?= $this->Form->create($appointment) ?>
+            <?= $this->Form->create($appointment,[
+                 'id' => 'mainAddForm',
+            ]) ?>
             <fieldset>
                 <legend><?= __('Add Appointment') ?></legend>
                 <?php

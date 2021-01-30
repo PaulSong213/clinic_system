@@ -81,6 +81,52 @@ class DocumentFilesController extends AppController
     }
 
     
+    public function upload()
+    {
+        
+        if ($this->request->is('post')) {
+            $fileID = [];
+            $filePaths = [];
+            $fileNames = [];
+            $files = $this->request->getData('documentSubmitted');
+           
+            for($i = 0; $i < sizeof($files); $i++){
+                $documentFile = $this->DocumentFiles->newEmptyEntity();
+                $name = $files[$i]->getClientFilename();
+                $type = $files[$i]->getClientMediaType();
+                $size = $files[$i]->getSize();
+                $tmpName = $files[$i]->getStream()->getMetadata('uri');
+                $error = $files[$i]->getError();
+                $extension = substr(strrchr($name, '.'), 1);
+                $path = Security::hash($name);
+                $documentFile->name = $name;
+                $documentFile->pathName = $path;
+                
+                //print_r($documentFile);
+                if ($this->DocumentFiles->save($documentFile)) {
+                    $newUniquePath = $path.$documentFile->id.'.'.$extension;
+                    $documentFileNew = $this->DocumentFiles->get($documentFile->id, [
+                        'contain' => [],
+                    ]);
+                    $documentFileNew = $this->DocumentFiles->patchEntity($documentFileNew, $this->request->getData());
+                    $documentFileNew->pathName = $newUniquePath;
+                    if ($this->DocumentFiles->save($documentFileNew)) {
+                        move_uploaded_file($tmpName, WWW_ROOT."clinic-document".DS.$newUniquePath);
+                        $fileNames[] = $documentFileNew->name;
+                        $filePaths[] = $documentFileNew->pathName;
+                        $fileID[] = $documentFileNew->id;
+                        
+                    }
+                }
+            }
+            $listUploadedFile = array('fileID' => $fileID,'filePaths' => $filePaths,
+                'fileNames'=> $fileNames);
+            print_r(json_encode($listUploadedFile));
+        }else{
+           return $this->redirect(['action' => 'index']);
+        }
+    }
+    
     
     
     /**
@@ -120,9 +166,11 @@ class DocumentFilesController extends AppController
         $path = $documentFile->pathName;
         
         if ($this->DocumentFiles->delete($documentFile)) {
-           unlink(WWW_ROOT.$path);
+           unlink(WWW_ROOT.'clinic-document'.DS.$path);
         } 
 
         return $this->redirect(['action' => 'index']);
     }
+    
+    
 }

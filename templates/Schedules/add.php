@@ -13,7 +13,9 @@
     </aside>
     <div class="column-responsive column-80">
         <div class="schedules form content">
-            <?= $this->Form->create($schedule) ?>
+            <?= $this->Form->create($schedule,[
+                 'id' => 'mainAddForm',
+            ]) ?>
             <fieldset>
                 <legend><?= __('Add Schedule') ?></legend>
                 <?php

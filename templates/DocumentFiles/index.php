@@ -12,7 +12,7 @@
             <thead>
                 <tr>
                     <th><?= $this->Paginator->sort('id') ?></th>
-                    <th><?= $this->Paginator->sort('name') ?></th>
+                    <th class="hidden"><?= $this->Paginator->sort('name') ?></th>
                     <th><?= $this->Paginator->sort('View File') ?></th>
                     <th><?= $this->Paginator->sort('pathName') ?></th>
                     <th><?= $this->Paginator->sort('created_at') ?></th>
@@ -88,7 +88,7 @@
             order: [[ 0, "desc" ],[ 1, 'asc' ]],
             columns: [
                     { data: 'id' },
-                    { data: 'name'},
+                    { data: 'name', className: "hidden", targets: "_all"},
                     { data: 'pathName' , className: "preview-file", targets: "_all"},
                     { data: 'pathName'},
                     { data: 'created_at' },
@@ -119,11 +119,11 @@
                     var target = index + 1;
                     var previewCell = $(tableSelector + " tbody tr:nth-child("+target+") td:nth-child(3) ");
                     var fileName = $(tableSelector + " tbody tr:nth-child("+target+") td:nth-child(2)").html();
-                    var source = $(element).html();
+                    var source = "/clinic-document/"+$(element).html();
                     var sourceExtension = source.split(".").slice(-1)[0];
                     
                     var openFile = $("<a href=' " + source+ "' target='_blank'></a>");
-                    var previewImage = $("<img src= 'clinic-document/" + source + "'  >");
+                    var previewImage = $("<img src= '" + source + "'  >");
                     previewImage.attr('onerror', "this.onerror=null;this.src='document.png';" );
                     openFile.append(previewImage);           
                     previewCell.html(openFile);
