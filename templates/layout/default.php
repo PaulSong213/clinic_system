@@ -330,8 +330,6 @@ if(isset($_COOKIE['userTheme'])) {
     
     <script>
         
-
-        
         function setDefaultFullName(optionId, fullNameId){
             $(optionId).click(function(){
                 //Get text or inner html of the selected option

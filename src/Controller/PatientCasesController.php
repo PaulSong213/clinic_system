@@ -107,15 +107,15 @@ class PatientCasesController extends AppController
     
     public function income(){
         
-        if ($this->request->is(['ajax'])) {
+        //if ($this->request->is(['ajax'])) {
         
         $this->paginate = [
             'maxLimit' => 10000,
         ];
         $patientCases = $this->paginate($this->PatientCases);
         $this->set(compact('patientCases'));
-        }else {
-            return $this->redirect(['action' => 'index']);
-        } 
+//        }else {
+//            return $this->redirect(['action' => 'index']);
+//        } 
     }
 }
